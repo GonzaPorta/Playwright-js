@@ -1,0 +1,25 @@
+{
+    "fechaOperacion": "2021-02-09T23:01:06.576Z",
+    "numeroTransferencia": 170043,
+    "importe": 15000.75,
+    "moneda": 1,
+    "causal": "Cuentas Propias",
+    "dbcr": "D",
+    "sucursalCuenta": 30,
+    "numeroCuenta": 4097508,
+    "modulo": "CA",
+    "cuit": 20111111110,
+    "razonSocial": "Razon social 1",
+    "accion": "G",
+    "mismoTitular": "N",
+    "movimientoReverso": 0,
+    "secuencialOriginal": 170043,
+    "contraparte": {
+        "codigoBanco": 311,
+        "sucursal": 30,
+        "modulo": "CA",
+        "numeroCuenta": "1234567",
+        "razonSocial": "Razon Social 2",
+        "cuit": "20222222220"
+    }
+}

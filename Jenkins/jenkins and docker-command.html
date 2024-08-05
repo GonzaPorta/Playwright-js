@@ -1,0 +1,187 @@
+DOCKER COMMANDS-LINES  AND TOOLS FOR JENKIS
+After installing Docker, run the following command from a terminal window to run Docker install jenkins with postman:
+
+To write inside a file use following commands in Windows:
+echo. > NUEVO_ARCHIVO.txt
+echo caca >> NUEVO_ARCHIVO.txt
+
+In terminal cdm or PowerShell or Linux:
+docker exec -ti (NAME_CONTAINER)JENKIS bash
+
+docker run -p 8080:8080 -p 50000:50000 --restart=on-failure -v jenkins_home:/var/jenkins_home --env JAVA_OPTS="-Dfile.encoding=UTF8" --name "NAME_CONTAINER" vdespa/jenkins-postman
+
+
+Create image: construccion de la imagen que vamos a utilizar
+into Dockerfile:
+    FROM node:18
+    LABEL maintainer = "QA - Gonzalo Porta <gonzaloporta17@gmail.com>"
+        
+    RUN mkdir -p /home/app
+
+    COPY . /home/app
+
+    EXPOSE 3000
+
+    CMD ["node", "/home/app/index.js"]
+
+Create file dockerfile.dev
+into Dockerfile.dev:
+    FROM node:18
+    LABEL maintainer = "QA - Gonzalo Porta <gonzaloporta17@gmail.com>"
+
+    RUN mkdir -p /home/app
+
+    RUN npm -g nodemon
+
+    WORKDIR /home/app
+
+    EXPOSE 3000
+
+    CMD ["nodemon", "index.js"]
+
+Build an image from a Dockerfile:
+docker build -t "NAME_IMAGE:1" . -----> with '.' indicates where we are
+
+Download image:
+docker run "IMAGE"(mongo) ----> download image, create container and star container
+-d ---> no view logs
+docker pull "IMAGE(mongoDB)"
+
+Create file docker-compose-dev.yaml
+    version: "3.9"
+    services:
+        NAME_CONTAINER(chanchito):
+            build:
+                context: .
+                dockerfile: Dockerfile.dev
+            ports:
+                - "3000:3000"
+            links:
+                - NAME_CONTAINER(monguito)
+            volumes:
+             - .: /home/app
+        NAME_CONTAINER(monguito):
+            image: NAME_IMAGE(mongo)
+            ports:
+                - "ANFITRION_PC_ID 27017:CONTAINER_PORT 27017"
+            environment:
+                USERNAME= NAME
+                PASSWORD= PASSWORD
+            volumes:
+                - mongo-data:PATH/PATH...
+
+    volumes://volumenes definidos se pueden usar, dentro del container que necesitemos
+        NAME_VOLUMEN(mongo-data):
+        otro_volumen:
+
+This command is used to create a network
+docker network create "MI_RED"
+docker network prune ----> Delete all unused networks
+docker network rm NAME_OF_NETWORK ------> delete network
+
+This command is used to create a container from an image:
+docker create "CONTAINER"(mongo)
+docker create -p 2701:2701 --name "NAME_CONTAINER"(monguito) --network "MI_RED" "NAME_IMAGE"(-d mongo)
+
+Start container:
+docker start "ID_CONTAINER"
+docker stats ------> Get usage stadistics for all containers
+docker inspect nombre_del_contenedor ------> view container details
+docker ps -a ------> list container details
+docker images ------> list images details
+docker stop "NAMES,ID" -------> stop container
+docker rm "NAMES,ID" ------> delete container
+docker rmi "NAMES,ID" ------> delete image
+docker tag "ID_IMAGE" "NAME_NEW_IMAGE" ----> create new image from another image
+docker rename NAME NEW_NAME ------> rename container
+-e ----> environment variable
+
+DOCKER-COMPOSE:
+Create file docker-compose.yaml
+into docker-compose.yaml:
+    version: "3.9"
+    services:
+        NAME_CONTAINER(chanchito):
+            build: .
+            ports:
+                - "3000:3000"
+            links:
+                - NAME_CONTAINER(monguito)
+        NAME_CONTAINER(monguito):
+            image: NAME_IMAGE(mongo)
+            ports:
+                - "A 27017:C 27017"
+            environment:
+                USERNAME= NAME
+                PASSWORD= PASSWORD
+            volumes:
+                - mongo-data:PATH/PATH...
+
+    volumes://volumenes definidos se pueden usar, dentro del container que necesitemos
+        NAME_VOLUMEN(mongo-data):
+        otro_volumen:
+
+docker compose up -u ----> create container(corre en incognito)
+docker compose -f "NAME_DOCKER_COMPOSE_CUSTOMIZADO.yaml" up ----> create container
+docker compose down ----> Removed container and removed network
+
+
+Start Jenkis:
+
+Seed job :DSL plugin--> build job automatic(definido dentro de un job)
+Ejecutar:'Process Job DSLs'
+    job('job-dsl-example'){
+        parameters {
+            stringParam('Planet', )
+            booleanParam('FLAG', true)
+            choiceParam('OPTION',['option 1 (default)', 'option 2', 'option 3'])
+            Choice Parameter"{Name:'Comandos',Choices:'test', 'testChrome'}
+        } 
+        <!-- SourceControlManager de donde descarga el codigo fuente -->
+        scm {
+            git('https://gitblablabla....', 'master')
+        }
+        triggers {
+            cron('H 5 * * 7')
+        }
+        steps {
+            shell("echo hello")
+        }
+        publishers {
+            mailer('gonzaloporta17@gmail.com', true, true)
+        }
+    }
+http://localhost:8080/
+
+Pipeline: a set of jobs organized in stages
+Job: a set of commands to execute
+
+To properly display the HTML reports in Jenkins run the following script in Jenkins Dashboard > Manage Jenkins > Script Console, and then Manage Jenkins > Manage Plugins Install(HTML Publisher):
+
+System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "sandbox allow-scripts;")
+
+Post-build-actions(In freestyle):
+
+Select to option "Publish HTML reports":
+Report title
+Index page(s)
+
+Post actions to publish the report(In jenkisFile):
+
+    post {
+        always {
+            publishHTML target: [
+                reportName: 'Newman',
+                reportDir: 'newman',
+                reportFiles: 'report.html',
+                reportTitles: 'Postman API tests',
+                keepAll: true,
+                alwaysLinkToLastBuild: true,
+                allowMissing: false
+            ]
+        }
+    }
+Publish JUnit report/Post-build-actions(In freestyle):
+
+Build Steps --> ,junit --reporter-junit-export newman/reporte.xml
+Add post build actions

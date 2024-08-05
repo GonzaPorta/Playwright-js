@@ -1,0 +1,81 @@
+// plugins {
+//     id 'java'
+//     id 'io.qameta.allure' version '2.8.1'
+// }
+
+// group 'esb-topaz'
+// version '1.0-SNAPSHOT'
+
+// def allureVersion = '2.17.2'
+// def junitVersion = '5.7.0'
+
+// repositories {
+//     maven {
+//         url "https://nexus.nbch.com.ar/repository/thirdparty/"
+//     }
+//     maven{
+//         url "https://nexus.nbch.com.ar/repository/jcenter/"
+//     }
+//     jcenter()
+// }
+
+// dependencies {
+//     testCompile group: 'junit', name: 'junit', version: '4.12'
+//     implementation group: 'io.qameta.allure', name: 'allure-junit5', version: allureVersion
+//     implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.11.1'
+//     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVersion
+//     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
+//     testImplementation 'io.qameta.allure:allure-cucumber4-jvm:2.14.0'
+//     testImplementation 'io.cucumber:cucumber-java:4.8.1'
+//     testImplementation 'io.cucumber:cucumber-junit:4.8.1'
+//     implementation group: 'global.practia.jemeinsamstark', name: 'services', version: '2.2'
+//     implementation group: 'global.practia.jemeinsamstark.utils.dbconnectors', name: 'mssql-jdbcConnector', version: '0.2'
+// }
+
+// test {
+//     useJUnitPlatform()
+// }
+
+// allure {
+//     version = allureVersion
+//     aspectjweaver = true
+//     aspectjVersion = '1.9.5'
+//     configuration = 'compile'
+//     resultsDir = new File(System.properties.getProperty('resultsDir', getBuildDir().toString()) + "/allure-results" )
+//     useJUnit5 {
+//         version = allureVersion
+//     }
+// }
+
+// task AllTestBDD(type: Test) {
+//     group='esb-topaz'
+//     systemProperties System.getProperties()
+//     def tag = (systemProperties.get('tagsBDD')==null)?"--tags 'not @skip'":"--tags '" + systemProperties.get('tagsBDD') + " and not @skip'"
+//     def cucumberReportPath = System.properties.getProperty('resultsDir', getBuildDir().toString())+'/reports/cucumber-report.json'
+//     def plugins = '--plugin io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm --plugin pretty --plugin json:'+cucumberReportPath
+//     systemProperty "cucumber.options", tag + plugins
+//     dependsOn assemble, testClasses
+
+//     include '**/tests/**.class'
+//     exclude '**/tests/utils/**.class'
+
+//     reports.junitXml.setDestination(new File(System.properties.getProperty('resultsDir', getBuildDir().toString()+'/../..') + '/reports'))
+//     reports.html.setDestination(new File(System.properties.getProperty('resultsDir', getBuildDir().toString()+'/../..') + '/reports'))
+//     outputs.upToDateWhen {false}
+// }
+
+// task UtilsTestsBDD(type: Test) {
+//     group='esb-topaz'
+//     systemProperties System.getProperties()
+//     def tag = (systemProperties.get('tagsBDD')==null)?"--tags 'not @skip'":"--tags '" + systemProperties.get('tagsBDD') + " and not @skip'"
+//     def cucumberReportPath = System.properties.getProperty('resultsDir', getBuildDir().toString())+'/../../reports/cucumber-report.json'
+//     def plugins = '--plugin io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm --plugin pretty --plugin json:'+cucumberReportPath
+//     systemProperty "cucumber.options", tag + plugins
+//     dependsOn assemble, testClasses
+
+//     include '**/tests/utils/**.class'
+
+//     reports.junitXml.setDestination(new File(System.properties.getProperty('resultsDir', getBuildDir().toString()+'/../..') + '/reports'))
+//     reports.html.setDestination(new File(System.properties.getProperty('resultsDir', getBuildDir().toString()+'/../..') + '/reports'))
+//     outputs.upToDateWhen {false}
+// }

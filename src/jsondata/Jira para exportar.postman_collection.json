@@ -1,0 +1,138 @@
+{
+	"info": {
+		"_postman_id": "6d8eb0ac-dfd2-4a27-ae24-f5d86f5efa56",
+		"name": "Jira para exportar",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29519215",
+		"_collection_link": "https://lunar-equinox-517466.postman.co/workspace/Team-Workspace~5c451dd1-0e3d-452f-856a-2300eece2420/collection/29519215-6d8eb0ac-dfd2-4a27-ae24-f5d86f5efa56?action=share&source=collection_link&creator=29519215"
+	},
+	"item": [
+		{
+			"name": "Jira",
+			"item": [
+				{
+					"name": "Generar-Ticket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const getData = () => pm.response.json();\r",
+									"const data = getData();\r",
+									"pm.collectionVariables.set('keyESBAUT',data[0].key);\r",
+									"console.log(pm.collectionVariables.get('keyESBAUT'));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "config594",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "c00portago",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YzAwZGlwYW9tajp0ZW1wb3JhbDAx"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/projects/apis/esb-topaz/project/src/test/resources/features/EsbTopazBDD/IntegracionTopazInterfaces/Interfaces/SIBE/SATSIBE03/SATSIBE03/SATSIBE03SituacionCliente_Parametros.feature"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://jira.nbch.com.ar/rest/raven/1.0/import/feature?projectKey=ESBAUT",
+							"protocol": "https",
+							"host": [
+								"jira",
+								"nbch",
+								"com",
+								"ar"
+							],
+							"path": [
+								"rest",
+								"raven",
+								"1.0",
+								"import",
+								"feature"
+							],
+							"query": [
+								{
+									"key": "projectKey",
+									"value": "ESBAUT"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obteniendo Ticket-vinculado",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "c00portago",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "config594",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://jira.nbch.com.ar/rest/raven/1.0/export/test?keys={{keyESBAUT}}",
+							"protocol": "https",
+							"host": [
+								"jira",
+								"nbch",
+								"com",
+								"ar"
+							],
+							"path": [
+								"rest",
+								"raven",
+								"1.0",
+								"export",
+								"test"
+							],
+							"query": [
+								{
+									"key": "keys",
+									"value": "{{keyESBAUT}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

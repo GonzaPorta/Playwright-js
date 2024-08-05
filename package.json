@@ -1,0 +1,41 @@
+{
+  "name": "playwright-automation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "executeObserver": "playwright test example.spec.js --headed",
+    "generate-code": "playwright codegen",
+    "showReport": "playwright show-report",
+    "debugCode": "playwright test example.spec.js --debug",
+    "ui": "playwright test --ui",
+    "smoke": "playwright test example.spec.js --grep smoke",
+    "critical": "playwright test --grep critical",
+    "regression": "playwright test --grep regression",
+    "interfaz": "playwright test --grep interfaz",
+    "fast": "playwright test --grep fast",
+    "parameters": "playwright test --grep parametros",
+    "Allapi": "playwright test --config=api.config.js",
+    "apiPw": "playwright test apiPlaywright.spec.js --grep interfaz",
+    "mobileAIOS": "playwright test --project=Mobile Safari",
+    "mobileAndroid": "playwright test --project=Mobile Chrome",
+    "test:dev": "playwright test --project=dev",
+    "test:prod": "playwright test --project=prod"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.43.0",
+    "@types/node": "^20.8.9",
+    "allure-commandline": "^2.27.0",
+    "allure-playwright": "^2.15.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "dotenv": "^16.3.1",
+    "node-fetch": "^3.3.2",
+    "playwright": "^1.41.1"
+  }
+}
